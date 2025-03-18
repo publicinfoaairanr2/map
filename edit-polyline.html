@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ویرایشگر مسیر نقشه</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+    .control-panel {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+    .btn {
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .btn-danger {
+      background-color: #f44336;
+    }
+    .btn-danger:hover {
+      background-color: #d32f2f;
+    }
+    .btn-info {
+      background-color: #2196F3;
+    }
+    .btn-info:hover {
+      background-color: #0b7dda;
+    }
+    .point-tooltip {
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      border-radius: 3px;
+      color: white;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<h1>ویرایشگر مسیر نقشه</h1>
+
+<div class="control-panel">
+  <button id="addStartPoint" class="btn btn-info">افزودن نقطه به ابتدای مسیر</button>
+  <button id="addMidPoint" class="btn">افزودن نقطه بین خطوط</button>
+  <button id="deletePoint" class="btn btn-danger">حذف نقطه انتخاب شده</button>
+  <button id="saveRoute" class="btn">ذخیره مسیر</button>
+</div>
+
+<div id="map"></div>
+<div id="coordinates"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+  // مقداردهی اولیه نقشه با مرکزیت مشهد
+  const map = L.map('map', {
+    center: [36.2970, 59.6062], // مرکز نقشه (مشهد)
+    zoom: 13,
+    minZoom: 10,
+    maxZoom: 18,
+    zoomControl: true
+  });
+
+  // افزودن لایه کاشی OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // تعریف نقاط مسیر
+  let routePoints = [
+    [
+      36.267182562343734,
+      59.69953536987305
+    ],
+    [
+      36.27029661150109,
+      59.69159603118897
+    ],
+    [
+      36.276628128472815,
+      59.68159675598145
+    ],
+    [
+      36.282889943447486,
+      59.67224121093751
+    ],
+    [
+      36.27638594874375,
+      59.66636180877686
+    ],
+    [
+      36.26915480789592,
+      59.65996742248536
+    ],
+    [
+      36.27401600746136,
+      59.64775800704957
+    ],
+    [
+      36.276956799760534,
+      59.640376567840576
+    ],
+    [
+      36.27908448041087,
+      59.63462591171265
+    ],
+    [
+      36.28143697036607,
+      59.624111652374275
+    ],
+    [
+      36.284896385615696,
+      59.62700843811036
+    ],
+    [
+      36.286721165382474,
+      59.629851579666145
+    ],
+    [
+      36.287681103487714,
+      59.6304202079773
+    ],
+    [
+      36.28913396032074,
+      59.630591869354255
+    ],
+    [
+      36.29240278929061,
+      59.63095664978027
+    ],
+    [
+      36.29584442416479,
+      59.62821006774903
+    ],
+    [
+      36.297643007108206,
+      59.62115049362183
+    ],
+    [
+      36.299718243589965,
+      59.61771726608277
+    ],
+    [
+      36.29404579975299,
+      59.61022853851319
+    ],
+    [
+      36.29724524714404,
+      59.60677385330201
+    ],
+    [
+      36.298127233892274,
+      59.60795402526856
+    ],
+    [
+      36.29947613551203,
+      59.60668802261353
+    ],
+    [
+      36.30310767777371,
+      59.60919857025147
+    ],
+    [
+      36.30815696979895,
+      59.61230993270875
+    ],
+    [
+      36.311580618791744,
+      59.61443424224854
+    ],
+    [
+      36.32024281675542,
+      59.61975574493409
+    ],
+    [
+      36.327503797873874,
+      59.62400436401368
+    ],
+    [
+      36.336700069393146,
+      59.6054220199585
+    ],
+    [
+      36.338221152528355,
+      59.60692405700684
+    ],
+    [
+      36.3409866821269,
+      59.60846900939942
+    ],
+    [
+      36.34416691976725,
+      59.610357284545906
+    ],
+    [
+      36.34665571080782,
+      59.61173057556153
+    ],
+    [
+      36.34803833812564,
+      59.6074390411377
+    ],
+    [
+      36.34949007038575,
+      59.60675239562989
+    ],
+    [
+      36.352946466817286,
+      59.61104393005372
+    ],
+    [
+      36.356817448638495,
+      59.61645126342774
+    ],
+    [
+      36.363383852514296,
+      59.626321792602546
+    ],
+    [
+      36.3661484883983,
+      59.637308120727546
+    ]
+  ];
+
+  // آیکون برای نمایش نقاط
+  const pointIcon = L.icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+    iconSize: [15, 25],
+    iconAnchor: [7, 25],
+    popupAnchor: [1, -24],
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    shadowSize: [25, 25],
+    shadowAnchor: [5, 25]
+  });
+
+  // تعریف لایه‌های مختلف
+  let routeLayer = L.layerGroup().addTo(map);
+  let markersLayer = L.layerGroup().addTo(map);
+  let polyline;
+
+  let selectedPoint = null;
+  let selectedMarker = null;
+
+  // تابع نمایش مسیر و نقاط
+  function renderRoute() {
+    // پاک کردن لایه‌های قبلی
+    routeLayer.clearLayers();
+    markersLayer.clearLayers();
+
+    // رسم خط مسیر
+    polyline = L.polyline(routePoints, {color: 'red', weight: 3}).addTo(routeLayer);
+
+    // افزودن نقاط به مسیر
+    routePoints.forEach((point, index) => {
+      const marker = L.marker(point, {
+        icon: pointIcon,
+        draggable: true,
+        title: `نقطه ${index + 1}`
+      }).addTo(markersLayer);
+
+      // اطلاعات نقطه
+      marker.bindTooltip(`نقطه ${index + 1}<br>برای جابجایی درگ کنید`, {
+        permanent: false,
+        direction: 'top',
+        className: 'point-tooltip'
+      });
+
+      // ذخیره شماره نقطه در مارکر
+      marker.pointIndex = index;
+
+      // رویداد کلیک برای انتخاب نقطه
+      marker.on('click', function(e) {
+        if (selectedMarker) {
+          selectedMarker.setOpacity(1);
+        }
+        selectedPoint = index;
+        selectedMarker = marker;
+        marker.setOpacity(0.6);
+        L.DomEvent.stopPropagation(e);
+      });
+
+      // رویداد درگ برای جابجایی نقطه - بدون بازسازی کامل در حین درگ
+      marker.on('drag', function(e) {
+        const latlng = e.target.getLatLng();
+        routePoints[index] = [latlng.lat, latlng.lng];
+
+        // به‌روزرسانی خط بدون بازسازی کامل
+        polyline.setLatLngs(routePoints);
+      });
+
+      // نمایش مختصات و بازسازی کامل بعد از اتمام جابجایی
+      marker.on('dragend', function(e) {
+        const latlng = e.target.getLatLng();
+        routePoints[index] = [latlng.lat, latlng.lng];
+        document.getElementById('coordinates').innerHTML =
+                `نقطه ${index + 1}: [${latlng.lat.toFixed(6)}, ${latlng.lng.toFixed(6)}]`;
+      });
+    });
+  }
+
+  // کلیک روی نقشه برای لغو انتخاب نقطه
+  map.on('click', function() {
+    if (selectedMarker) {
+      selectedMarker.setOpacity(1);
+      selectedMarker = null;
+      selectedPoint = null;
+    }
+  });
+
+  // افزودن نقطه به ابتدای مسیر
+  document.getElementById('addStartPoint').addEventListener('click', function() {
+    // اگر نقطه‌ای وجود دارد، نقطه جدید کمی بالاتر اضافه می‌شود
+    const firstPoint = routePoints[0];
+    const newLat = firstPoint[0] + 0.005;
+    const newLng = firstPoint[1];
+
+    routePoints.unshift([newLat, newLng]);
+    renderRoute();
+  });
+
+  // افزودن نقطه بین خطوط
+  document.getElementById('addMidPoint').addEventListener('click', function() {
+    // اگر نقطه انتخاب شده و نقطه بعدی وجود دارد
+    if (selectedPoint !== null && selectedPoint < routePoints.length - 1) {
+      const currentPoint = routePoints[selectedPoint];
+      const nextPoint = routePoints[selectedPoint + 1];
+
+      // محاسبه نقطه میانی
+      const midLat = (currentPoint[0] + nextPoint[0]) / 2;
+      const midLng = (currentPoint[1] + nextPoint[1]) / 2;
+
+      // اضافه کردن نقطه میانی به آرایه
+      routePoints.splice(selectedPoint + 1, 0, [midLat, midLng]);
+
+      renderRoute();
+    } else {
+      alert('لطفاً ابتدا یک نقطه را انتخاب کنید (به جز نقطه آخر)');
+    }
+  });
+
+  // حذف نقطه انتخاب شده
+  document.getElementById('deletePoint').addEventListener('click', function() {
+    if (selectedPoint !== null) {
+      // اگر بیش از دو نقطه وجود دارد، امکان حذف وجود دارد
+      if (routePoints.length > 2) {
+        routePoints.splice(selectedPoint, 1);
+        selectedPoint = null;
+        selectedMarker = null;
+        renderRoute();
+      } else {
+        alert('حداقل دو نقطه برای مسیر لازم است');
+      }
+    } else {
+      alert('لطفاً ابتدا یک نقطه را انتخاب کنید');
+    }
+  });
+
+  // ذخیره مسیر
+  document.getElementById('saveRoute').addEventListener('click', function() {
+    const routeData = JSON.stringify(routePoints, null, 2);
+    console.log('مسیر ذخیره شد:');
+    console.log(routeData);
+
+    // نمایش مسیر در صفحه
+    const formattedPoints = routePoints.map((point, index) =>
+            `نقطه ${index + 1}: [${point[0].toFixed(6)}, ${point[1].toFixed(6)}]`
+    ).join('<br>');
+
+    document.getElementById('coordinates').innerHTML =
+            `<strong>مسیر ذخیره شد:</strong><br>${formattedPoints}`;
+
+    alert('مسیر ذخیره شد. مختصات در صفحه و کنسول قابل مشاهده است.');
+  });
+
+  // نمایش اولیه مسیر
+  renderRoute();
+</script>
+</body>
+</html>
