@@ -14,8 +14,8 @@ const CONFIG = {
 const ICONS = {
     user: L.icon({
         iconUrl: 'images/user.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41]
+        iconSize: [30, 30],
+        iconAnchor: [0, 0]
     }),
     meetingOpen: L.icon({
         iconUrl: 'images/m_blue.png',
