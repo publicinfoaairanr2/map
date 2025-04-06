@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>نقشه مشهد با مختصات جدا</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // ایجاد نقشه و تنظیم مرکز روی مشهد
+        var map = L.map('map').setView([36.2970, 59.6062], 13); // مختصات مشهد
+
+        // اضافه کردن لایه نقشه (از OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // رویداد کلیک روی نقشه
+        map.on('click', function(e) {
+            // اضافه کردن یک نقطه (marker) در محل کلیک
+            var marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+
+            // نمایش مختصات در یک alert با دو خط جداگانه
+            var coords = `lat: ${e.latlng.lat.toFixed(4)}\nlng: ${e.latlng.lng.toFixed(4)}`;
+            alert(coords);
+
+            // کپی کردن مختصات به کلیپ‌بورد (اختیاری)
+            navigator.clipboard.writeText(coords).then(function() {
+                console.log('مختصات کپی شد!');
+            }, function(err) {
+                console.error('خطا در کپی کردن: ', err);
+            });
+        });
+    </script>
+</body>
+</html>

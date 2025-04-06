@@ -75,20 +75,43 @@ const MEETINGS = [
     {nu:40, id: 1569688050, name: "صبح نشاط", lat: 36.30836230652038, lng: 59.64711403955924, time: "morning", isClosed:false },
     {nu:41, id: 1569688053, name: "گلهای بلغور", lat: 36.84693687282908, lng: 59.60190964373688, time: "night", isClosed:false },
     // {nu:42, id: 42, name: "عصر گلبو", lat: 36.2875081425391, lng: 59.664076566696174, time: "afternoon", isClosed:false },
-    // {nu:43, id: 43, name: "صبح رهایی", lat: 36.345649834323204, lng: 59.61667563332185, time: "morning", isClosed:false },
-    // {nu:44, id: 44, name: "شب مفتح", lat: 36.2875081425391, lng: 59.664076566696174, time: "night", isClosed:false },
-    // {nu:45, id: 45, name: "شب وحدت", lat: 36.2875081425391, lng: 59.664076566696174, time: "night", isClosed:false },
-// {nu:2, id: 1569688089, name: "جدید صبح", lat: 36.29775974062577, lng: 59.653728645384675, time: "morning", isClosed:false },
+    {nu:43, id: 43, name: "صبح رهایی", lat:36.298950844866006,lng:59.65561151552875, time: "morning", isClosed:false },
+    {nu:44, id: 44, name: "شب مفتح", lat:36.28785406405296,lng:59.65716722226003, time: "night", isClosed:false },
+    {nu:45, id: 45, name: "شب وحدت", lat:36.28716221949179,lng:59.632799375286105, time: "night", isClosed:false },
 ];
 
 // داده‌های مکان‌های مهم
 const PLACES = [
-    { id: 1, name: "کلانتری ۱۱۰", lat: 36.315, lng: 59.564, type: "police" },
-    { id: 2, name: "بیمارستان امام رضا", lat: 36.306, lng: 59.604, type: "hospital" },
-    { id: 3, name: "پمپ بنزین ولیعصر", lat: 36.295, lng: 59.625, type: "gas_station" },
-    { id: 4, name: "پمپ گاز توس", lat: 36.278, lng: 59.640, type: "cng_station" },
-    { id: 5, name: "کلینیک سینا", lat: 36.322, lng: 59.650, type: "clinic" },
-    { id: 6, name: "کمپ ترک اعتیاد امید", lat: 36.285, lng: 59.570, type: "camp" }
+    // { id: 1, name: "کلانتری ۱۱۰", lat: 36.315, lng: 59.564, type: "police" },
+    // { id: 2, name: "بیمارستان امام رضا", lat: 36.306, lng: 59.604, type: "hospital" },
+    // { id: 3, name: "پمپ بنزین ولیعصر", lat: 36.295, lng: 59.625, type: "gas_station" },
+    // { id: 4, name: "پمپ گاز توس", lat: 36.278, lng: 59.640, type: "cng_station" },
+    // { id: 5, name: "کلینیک سینا", lat: 36.322, lng: 59.650, type: "clinic" },
+    // { id: 6, name: "کمپ ترک اعتیاد امید", lat: 36.285, lng: 59.570, type: "camp" },
+    //
+    { id: 1, name: "کلینیک دانیال", lat: 36.3069,lng: 59.6626, type: "clinic" },
+    { id: 2, name: "کلینیک نگار", lat: 36.3067,lng: 59.6626, type: "clinic" },
+    { id: 3, name: "کلینیک بهار سلامت", lat: 36.3167,lng: 59.6177, type: "clinic" },
+    { id: 4, name: "کلینیک بنیاد", lat: 36.3391,lng: 59.6250, type: "clinic" },
+    //
+    { id: 5, name: "مرکز اشکان (۱)", lat: 36.279,lng: 59.694, type: "correctional_center" },
+    { id: 6, name: "مرکز بهار", lat: 36.340,lng: 59.698, type: "correctional_center" },
+    { id: 7, name: "مرکز خلق آباد", lat: 36.387,lng: 59.645, type: "correctional_center" },
+    { id: 8, name: "مرکز امید آزادی", lat: 36.264,lng: 59.755, type: "correctional_center" },
+    { id: 9, name: "مرکز اشکان (۲)", lat: 36.216,lng: 59.814, type: "correctional_center" },
+    { id: 10, name: "مرکز ثامن (۳)", lat: 36.476,lng: 59.675, type: "correctional_center" },
+    //
+    // { id: 11, name: "کمپ ترک اعتیاد امید دوباره رهایی", lat: 36.285, lng: 59.570, type: "camp" },
+    { id: 12, name: "کمپ ترک اعتیاد خانه امید", lat: 36.330, lng: 59.684, type: "camp" },
+    // { id: 13, name: "کمپ ترک اعتیاد ارسلان", lat: 36.285, lng: 59.570, type: "camp" },
+    { id: 14, name: "کمپ ترک اعتیاد شکوه پرواز", lat: 36.340, lng: 59.746, type: "camp" },
+    { id: 15, name: "کمپ ترک اعتیاد رضوان گستر عصر", lat: 36.285, lng: 59.700, type: "camp" },
+    // { id: 16, name: "کمپ ترک اعتیاد اشک شوق", lat: 36.285, lng: 59.570, type: "camp" },
+    { id: 17, name: "کمپ ترک اعتیاد بهشت سبز سعادت", lat: 36.311, lng: 59.686, type: "camp" },
+    // { id: 18, name: "کمپ ترک اعتیاد امیر علی", lat: 36.285, lng: 59.570, type: "camp" },
+    { id: 19, name: "کمپ ترک اعتیاد آسمان آبی", lat: 36.339, lng: 59.639, type: "camp" },
+    { id: 20, name: "کمپ ترک اعتیاد افق", lat: 36.379, lng: 59.676, type: "camp" },
+    // { id: 21, name: "کمپ ترک اعتیاد رهایی و زندگی", lat: 36.285, lng: 59.570, type: "camp" },
 ];
 
 // جدول تبدیل کدهای زمان به متن فارسی
@@ -319,7 +342,7 @@ class MapManager {
         );
 
         // فیلترهای مکان‌ها
-        const placeTypes = ['police', 'hospital', 'gas_station', 'cng_station', 'clinic', 'camp'];
+        const placeTypes = ['police', 'hospital', 'gas_station', 'cng_station', 'clinic', 'camp','correctional_center'];
         const selectedPlaces = placeTypes.filter(type => {
             const elementId = `filter${this.getFilterIdFromType(type)}`;
             return document.getElementById(elementId).checked;
@@ -351,7 +374,8 @@ class MapManager {
             'gas_station': 'GasStations',
             'cng_station': 'CNGStations',
             'clinic': 'Clinics',
-            'camp': 'Camps'
+            'camp': 'Camps',
+            'correctional_center': 'CorrectionalCenters'
         };
         return typeMap[type] || 'Unknown';
     }
